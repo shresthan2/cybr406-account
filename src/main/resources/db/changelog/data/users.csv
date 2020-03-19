@@ -1,0 +1,2 @@
+USERNAME,ENABLED,PASSWORD
+admin,true,{bcrypt}$2a$10$mzhwduIAIGoZrBdBS/zHmevtN0NouROvgcbJNxpOosR2HMAwXz5Fi

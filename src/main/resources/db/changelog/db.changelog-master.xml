@@ -1,0 +1,75 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!--
+    Profile Table
+    -->
+
+    <changeSet author="Ry (generated)" id="1584585523392-1">
+        <createTable tableName="PROFILE">
+            <column name="USERNAME" type="VARCHAR(50)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="CONSTRAINT_1"/>
+            </column>
+            <column name="FIRST_NAME" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_NAME" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INFO" type="CLOB"/>
+        </createTable>
+    </changeSet>
+
+    <!--
+    Security Tables
+    -->
+
+    <changeSet author="Ry (generated)" id="1583814800976-2">
+        <createTable tableName="AUTHORITIES">
+            <column name="USERNAME" type="VARCHAR_IGNORECASE(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AUTHORITY" type="VARCHAR_IGNORECASE(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Ry (generated)" id="1583814800976-5">
+        <createTable tableName="USERS">
+            <column name="USERNAME" type="VARCHAR_IGNORECASE(50)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="CONSTRAINT_4"/>
+            </column>
+            <column name="PASSWORD" type="VARCHAR_IGNORECASE(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ENABLED" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Ry (generated)" id="1583814800976-8">
+        <createIndex indexName="FK_AUTHORITIES_USERS_INDEX_A" tableName="AUTHORITIES">
+            <column name="USERNAME"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Ry (generated)" id="1583814800976-9">
+        <createIndex indexName="IX_AUTH_USERNAME" tableName="AUTHORITIES" unique="true">
+            <column name="USERNAME"/>
+            <column name="AUTHORITY"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Ry (generated)" id="1583814800976-12">
+        <addForeignKeyConstraint baseColumnNames="USERNAME" baseTableName="AUTHORITIES" constraintName="FK_AUTHORITIES_USERS" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="USERNAME" referencedTableName="USERS" validate="true"/>
+    </changeSet>
+    <changeSet author="Ry" id="user-data">
+        <loadData file="db/changelog/data/users.csv" tableName="USERS">
+            <column name="USERNAME" type="STRING"/>
+            <column name="ENABLED" type="BOOLEAN"/>
+            <column name="PASSWORD" type="STRING"/>
+        </loadData>
+        <loadData file="db/changelog/data/authorities.csv" tableName="AUTHORITIES">
+            <column name="USERNAME" type="STRING"/>
+            <column name="AUTHORITY" type="STRING"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
