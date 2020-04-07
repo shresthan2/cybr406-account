@@ -121,9 +121,28 @@ public class AccountHomework02Tests {
                 "Set the prePostEnabled parameter of @EnableGlobalMethodSecurity to true.");
     }
 
+    // Allow everyone to POST to /signup
+    // Update SecurityConfiguration to allow everyone to POST to /signup using .permitAll()
+    @Test
+    public void problem_05_everyoneCanPostToSignUp() throws Exception {
+        SignUp signUpA = new SignUp();
+        signUpA.setUsername("a");
+        signUpA.setPassword("a");
+        signUpA.setFirstName("a");
+        signUpA.setLastName("a");
+        signUpA.setInfo("a");
+
+        // Sign up user a
+        mockMvc.perform(post("/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(signUpA)))
+                .andExpect(status().isCreated());
+
+    }
+
     // Prevent users from altering profiles that don't belong to them with @PreAuthorize
     @Test
-    public void problem_05_onlyOwnerMayEditProfile() throws Exception {
+    public void problem_06_onlyOwnerMayEditProfile() throws Exception {
         assertMethodAnnotationIsPresent(
                 "Use @PreAuthorize on ProfileEventHandler::beforeSave to ensure only a profile's owner can edit it",
                 "com.cybr406.account.ProfileEventHandler",
@@ -178,7 +197,7 @@ public class AccountHomework02Tests {
 
     // Implement UserController with checkUser method
     @Test
-    public void problem_06_implementBasicCheckUserMethod() throws Exception {
+    public void problem_07_implementBasicCheckUserMethod() throws Exception {
         assertClassDeclaresMethod(
                 "Create a method in UserController called 'checkUser' with parameters String username and String password",
                 "com.cybr406.account.security.user.UserController",
@@ -218,7 +237,7 @@ public class AccountHomework02Tests {
 
     // Verify non-existent users return BAD_REQUEST
     @Test
-    public void problem_07_nonExistentUsersReturnBAD_REQUEST() throws Exception {
+    public void problem_08_nonExistentUsersReturnBAD_REQUEST() throws Exception {
         mockMvc.perform(get("/check-user")
                 .with(httpBasic("post", "post"))
                 .header("x-username", "does-not-exist")
@@ -229,7 +248,7 @@ public class AccountHomework02Tests {
 
     // Verify wrong password returns BAD_REQUEST
     @Test
-    public void problem_08_wrongPasswordsReturnBAD_REQUEST() throws Exception {
+    public void problem_09_wrongPasswordsReturnBAD_REQUEST() throws Exception {
         String usernameA = UUID.randomUUID().toString();
         SignUp signUpA = new SignUp();
         signUpA.setUsername(usernameA);
@@ -256,7 +275,7 @@ public class AccountHomework02Tests {
     // We don't want to give any hint that these users & roles exist...there's no reason for anyone to fetch
     // information about these accounts unless they are up to no good.
     @Test
-    public void problem_09_specialRolesReturnBAD_REQUEST() throws Exception {
+    public void problem_10_specialRolesReturnBAD_REQUEST() throws Exception {
         mockMvc.perform(get("/check-user")
                 .with(httpBasic("post", "post"))
                 .header("x-username", "post")
@@ -273,7 +292,7 @@ public class AccountHomework02Tests {
 
     // Verify only users with ROLE_ADMIN or ROLE_SERVICE can call /check-user
     @Test
-    public void problem_10_onlyAdminAndServiceCanAccessCheckUser() throws Exception {
+    public void problem_11_onlyAdminAndServiceCanAccessCheckUser() throws Exception {
         // ROLE_USER has no hope of checking other users
         mockMvc.perform(get("/check-user")
                 .with(httpBasic("user", "user"))
