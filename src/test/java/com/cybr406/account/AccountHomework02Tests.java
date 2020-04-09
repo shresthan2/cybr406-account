@@ -126,7 +126,7 @@ public class AccountHomework02Tests {
     @Test
     public void problem_05_everyoneCanPostToSignUp() throws Exception {
         SignUp signUpA = new SignUp();
-        signUpA.setUsername("a");
+        signUpA.setUsername(UUID.randomUUID().toString());
         signUpA.setPassword("a");
         signUpA.setFirstName("a");
         signUpA.setLastName("a");
