@@ -31,10 +31,10 @@ public class UserController {
 
  @GetMapping("/check-user")
     private ResponseEntity<List<String>> checkUser (
-           @RequestHeader(value = "x-username",required = true) String username,
+           @RequestHeader(value = "x-username",required = true) String usernameA,
            @RequestHeader(value = "x-password",required = true) String password) throws Exception{
      try{
-         UserDetails userDetails= userDetailsManager.loadUserByUsername(username);
+         UserDetails userDetails= userDetailsManager.loadUserByUsername(usernameA);
          if (!passwordEncoder.matches(password, userDetails.getPassword()))
              return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 

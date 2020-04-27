@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import sun.awt.HeadlessToolkit;
 
 import javax.sql.DataSource;
 
@@ -52,8 +53,9 @@ auth
     public void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .mvcMatchers(HttpMethod.GET,"/").permitAll()
+                .mvcMatchers(HttpMethod.GET,"/","/**").permitAll()
                 .mvcMatchers(HttpMethod.POST,"/signup").permitAll()
+                .mvcMatchers(HttpMethod.GET,"/check-user").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()

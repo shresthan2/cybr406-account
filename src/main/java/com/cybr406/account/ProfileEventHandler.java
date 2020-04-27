@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 public class ProfileEventHandler {
     @HandleBeforeSave
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-
     public void beforeSave(Profile profile) {
     }
 
