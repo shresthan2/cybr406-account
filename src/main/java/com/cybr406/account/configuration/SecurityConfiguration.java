@@ -53,7 +53,6 @@ auth
 
         http.authorizeRequests()
                 .mvcMatchers(HttpMethod.GET,"/").permitAll()
-                .mvcMatchers(HttpMethod.GET,"/profiles/a").permitAll()
                 .mvcMatchers(HttpMethod.POST,"/signup").permitAll()
                 .anyRequest().authenticated()
                 .and()

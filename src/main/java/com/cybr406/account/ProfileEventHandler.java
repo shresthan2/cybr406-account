@@ -8,8 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 @RepositoryEventHandler
 public class ProfileEventHandler {
-@PreAuthorize("ROLE_USER")
     @HandleBeforeSave
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
     public void beforeSave(Profile profile) {
     }
 
