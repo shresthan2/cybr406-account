@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 public class UserController {
- private static final GrantedAuthority userRole=new SimpleGrantedAuthority("Role_USER");
+ private static final GrantedAuthority userRole=new SimpleGrantedAuthority("ROLE_USER");
 
  @Autowired
     private UserDetailsManager userDetailsManager;

@@ -22,6 +22,7 @@ import javax.sql.DataSource;
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
     @Autowired
     DataSource dataSource;
 
@@ -52,10 +53,12 @@ auth
     @Override
     public void configure(HttpSecurity http) throws Exception {
 
+
         http.authorizeRequests()
-                .mvcMatchers(HttpMethod.GET,"/","/**").permitAll()
+                //.mvcMatchers(HttpMethod.GET,"/","/**").permitAll()
                 .mvcMatchers(HttpMethod.POST,"/signup").permitAll()
                 .mvcMatchers(HttpMethod.GET,"/check-user").permitAll()
+                .mvcMatchers(HttpMethod.PATCH,"/profiles/a").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
