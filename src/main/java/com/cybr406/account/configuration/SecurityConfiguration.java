@@ -55,10 +55,13 @@ auth
 
 
         http.authorizeRequests()
-                //.mvcMatchers(HttpMethod.GET,"/","/**").permitAll()
-                .mvcMatchers(HttpMethod.POST,"/signup").permitAll()
-                .mvcMatchers(HttpMethod.GET,"/check-user").permitAll()
+                .mvcMatchers(HttpMethod.GET,"/check-user").hasAnyRole("ADMIN","SERVICE")
+                .mvcMatchers(HttpMethod.GET,"/","/**").permitAll()
+
+               .mvcMatchers(HttpMethod.POST,"/signup").permitAll()
+
                 .mvcMatchers(HttpMethod.PATCH,"/profiles/a").permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
